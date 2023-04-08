@@ -122,3 +122,24 @@ const server = http.createServer((req, res) => {
 server.listen(3000);
 console.log("listenting on port 3000");
 ~~~
+
+- Node Package Manager
+- Before adding any node packages you need to have a package.json file
+    - npm init --yes
+
+- require() function works
+1. Checks whether its a Core Module 
+2. If not checks whether it starts with './' for File or Folder
+3. Finally checks the node_modules
+
+- Using 3rd party node_modules
+~~~js
+var _ = require("underscore");
+var result = _.contains([1, 2, 3], 3);
+console.log(result);
+~~~
+
+- Semantic Versioning
+    - 4.13.6: Major.Minor.Patch
+    - \^ : Interests in Minor version : 4.x
+    - \~ : Interests in Patch version : 4.13.x
