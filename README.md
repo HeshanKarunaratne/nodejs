@@ -143,3 +143,30 @@ console.log(result);
     - 4.13.6: Major.Minor.Patch
     - \^ : Interests in Minor version : 4.x
     - \~ : Interests in Patch version : 4.13.x
+
+- npm list
+
+- Show all the dependencies with their versions
+    - npm view {dependency_name} dependencies
+
+- Can identify all the versions for a dependency
+    - npm view {dependency_name} versions
+
+- Installing a specific version
+    - npm i mongoose@2.4.2
+
+- Update to Wanted  with current major version
+    - npm update
+
+- Checks for outdated dependencies
+    - npm outdated
+
+- Adding dev dependencies
+    - npm i {dep_name} --save-dev
+
+- Uninstalling a dependency
+    - npm un {dep_name}
+
+- Updating npm version
+    - npm version minor
+    - npm publish
