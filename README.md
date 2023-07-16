@@ -171,3 +171,35 @@ console.log(result);
 - Updating npm version
     - npm version minor
     - npm publish
+
+# Rest Services
+
+- Installing express
+    - npm i express
+
+- Setting express
+~~~js
+const express = require("express");
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send("Hello World");
+});
+
+app.listen(3000, ()=>console.log("Listening on port 3000..."));
+~~~
+
+- Add nodemon
+    - npm i -g nodemon
+    
+- Listening using nodemon
+    - nodemon index.js
+
+- Add port dynamically
+~~~js
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on port ${port}...`));
+~~~
+
+- Route Parameters: for Required fields 
+- Query Strings: for optional fields
