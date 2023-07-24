@@ -323,3 +323,43 @@ app.delete("/api/courses/:id", (req, res) => {
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 ~~~
+
+- Middleware Functions
+~~~js
+// log.js
+function log(req, res, next) {
+    console.log("Logging...");
+    next();
+}
+
+module.exports = log;
+
+// index.js
+const express = require("express");
+const log = require('./logger');
+const auth = require('./auth');
+const app = express();
+
+app.use(express.json());
+app.use(log);
+app.use(auth);
+~~~
+
+- Built in Middlewares in node
+~~~js
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Enable url encoded requests eg: key1=value1&key2=value2
+app.use(express.static("public")); // Enable static file hosting
+~~~
+
+- Enabling Morgan for development
+~~~js
+const morgan = require('morgan');
+const express = require("express");
+const app = express();
+
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    console.log("Morgan Enabled");
+}
+~~~

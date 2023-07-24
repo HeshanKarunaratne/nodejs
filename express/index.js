@@ -1,8 +1,18 @@
+const config = require("config");
 const Joi = require('joi');
+const morgan = require('morgan');
 const express = require("express");
 const app = express();
 
-app.use(express.json());
+console.log("Application Name: " + config.get("name"));
+console.log("Mail Server: " + config.get("mail.host"));
+console.log("Mail Password: " + config.get("mail.password"));
+
+
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    console.log("Morgan Enabled");
+}
 
 const courses = [
     { id: 1, name: "courses1" },
