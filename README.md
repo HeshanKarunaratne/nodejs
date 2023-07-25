@@ -363,3 +363,34 @@ if (app.get('env') === 'development') {
     console.log("Morgan Enabled");
 }
 ~~~
+
+- Logging using debug dependencies
+- set DEBUG=app:startup
+~~~js
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
+
+startupDebugger("Startup Enabled");
+dbDebugger("DB Enabled");
+~~~
+
+- Template Engines: using pug
+~~~js
+const express = require("express");
+const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', './views');
+
+app.get("/", (req, res) => {
+    res.render('index', { title: "My Express App", message: "Hello" })
+})
+~~~
+
+~~~pug
+html 
+    head
+        title= title 
+    body 
+        h2= message
+~~~
