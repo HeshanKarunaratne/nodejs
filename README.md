@@ -409,10 +409,12 @@ getUser(1, function (user) {
 console.log("After");
 
 function getUser(id, callback) {
+    return new Promise((resolve, reject)=> {
     setTimeout(() => {
         console.log("Reading a user from database....");
         callback({ id, gitHubUsername: 'mosh' })
     }, 2000);
+    });    
 }
 
 function getRepos(username, callback) {
@@ -485,4 +487,119 @@ const p = new Promise((resolve, reject) => {
 p
 .then(result => console.log("Result is: " + result))
 .catch(error => console.log(error));
+~~~
+
+- Promises
+~~~js
+console.log("Before");
+
+getUser(1)
+    .then(user => getRepos(user.gitHubUsername))
+    .then(repos => getCommits(repos[0]))
+    .then(commits => console.log(commits))
+    .catch(error => console.log("Error", error.message));
+
+console.log("After");
+
+
+function getUser(id) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Reading a user from database....");
+            resolve({ id, gitHubUsername: 'mosh' })
+        }, 2000);
+    });
+}
+
+function getRepos(username) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Reading from getRepos: " + username);
+            resolve(['repo1', 'repo2']);
+        }, 2000);
+    });
+}
+
+function getCommits(repo) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Reading commits for: " + repo);
+            resolve("commitId1");
+        }, 2000);
+    });
+}
+~~~
+
+- Always use Error object when dealing with promise rejects: You will see the error call stack
+~~~js
+const p = Promise.reject(new Error("Reason for rejection"));
+p.catch(err => console.log(err));
+~~~
+
+- Multiple Promises
+~~~js
+const p1 = new Promise((resolve) => {
+    setTimeout(() => {
+        console.log("Async Operation 1");
+        resolve(1);
+    }, 2000);
+});
+
+const p2 = new Promise((resolve) => {
+    setTimeout(() => {
+        console.log("Async Operation 2");
+        resolve(2)
+    }, 2000);
+});
+
+Promise.all([p1, p2])
+    .then(result => console.log(result))
+    .catch(err => console.log(err));
+~~~
+
+- Async/Await
+~~~js
+console.log("Before");
+displayCommits();
+console.log("After");
+
+async function displayCommits() {
+    try {
+        const user = await getUser(1);
+        const repos = await getRepos(user.gitHubUsername);
+        const commits = await getCommits(repos[0]);
+        console.log(commits);
+    } catch (err) {
+        console.log("An Error occurred", err);
+    }
+
+}
+
+function getUser(id) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Reading a user from database....");
+            resolve({ id, gitHubUsername: 'mosh' })
+        }, 2000);
+    });
+}
+
+function getRepos(username) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Reading from getRepos: " + username);
+            resolve(['repo1', 'repo2']);
+        }, 2000);
+    });
+}
+
+function getCommits(repo) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Reading commits for: " + repo);
+            resolve("commitId1");
+            // reject(new Error("Error"));
+        }, 2000);
+    });
+}
 ~~~
