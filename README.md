@@ -399,10 +399,10 @@ html
 ~~~js
 console.log("Before");
 getUser(1, function (user) {
-    console.log(user);
-
     getRepos(user.gitHubUsername, function (repos) {
-        console.log(repos);
+        getCommits(repos[0], function (commits) {
+            console.log(commits);
+        });
     });
 
 });
@@ -419,6 +419,13 @@ function getRepos(username, callback) {
     setTimeout(() => {
         console.log("Reading from getRepos: " + username);
         callback(['repo1', 'repo2']);
+    }, 2000);
+}
+
+function getCommits(repo, callback) {
+    setTimeout(() => {
+        console.log("Reading commits for: " + repo);
+        callback("commitId1");
     }, 2000);
 }
 ~~~
@@ -461,4 +468,21 @@ function getCommits(repo, callback) {
         callback({ commit: 'g2342sgf' })
     }, 2000);
 }
+~~~
+
+- Promises
+~~~js
+const p = new Promise((resolve, reject) => {
+    // Kick off some async work
+    setTimeout(() => {
+        // resolve(1);
+        reject(new Error("message"));
+    }, 2000);
+
+
+});
+
+p
+.then(result => console.log("Result is: " + result))
+.catch(error => console.log(error));
 ~~~
