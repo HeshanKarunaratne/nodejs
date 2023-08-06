@@ -603,3 +603,33 @@ function getCommits(repo) {
     });
 }
 ~~~
+
+- Creating a schema using mongoose
+~~~js
+const mongoose = require("mongoose");
+
+mongoose.connect('mongodb://127.0.0.1:27017/playground')
+    .then(() => console.log("Connected to MongoDB.."))
+    .catch((err) => console.log("Could not connect to MongoDB...", err));
+
+const courseSchema = new mongoose.Schema({
+    name: String,
+    author: String,
+    tags: [String],
+    date: {
+        type: Date, default: Date.now
+    },
+    isPublished: Boolean
+})
+~~~
+
+- Create the model
+~~~js
+const Course = mongoose.model('Course', courseSchema);
+const course = new Course({
+    name: "Node.js Course",
+    author: "Mosh",
+    tags: ['node', 'backend'],
+    isPublished: true
+});
+~~~
