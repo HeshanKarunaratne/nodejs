@@ -633,3 +633,79 @@ const course = new Course({
     isPublished: true
 });
 ~~~
+
+- Add a course
+~~~js
+async function createCourse() {
+    const course = new Course({
+        name: "Angular Course",
+        author: "Mosh",
+        tags: ['angular', 'frontend'],
+        isPublished: true
+    });
+    const result = await course.save();
+    console.log(result);
+}
+createCourse();
+~~~
+
+- Get all courses
+~~~js
+async function getCourses() {
+    const courses = await Course.find();
+    console.log(courses);
+}
+getCourses();
+~~~
+
+- Filtering
+~~~js
+async function getCourses() {
+    const courses = await Course
+    .find({ name: "Node.js Course" })
+    .limit(10)
+    .sort({name: 1});
+    console.log(courses);
+}
+getCourses();
+~~~
+
+- Ascending(1) and descending(-1)
+~~~js
+async function getCourses() {
+    const courses = await Course.find().limit(10).sort({ name: -1 });
+    console.log(courses);
+}
+getCourses();
+~~~
+
+- Get certain fields only
+~~~js
+async function getCourses() {
+    const courses = await Course.find().limit(10).sort({ name: -1 }).select({ name: 1, tags: 1 });
+    console.log(courses);
+}
+getCourses();
+~~~
+
+- Comparison Operators
+~~~js
+async function getCourses() {
+    //eq (equal)
+    //ne (not equal)
+    //gt (greater than)
+    //gte (greater than or equal to)
+    //lt (less than)
+    //lte (less than or equal to)
+    //in
+    //nin
+    const courses = await Course
+        // .find({ price: { $gte: 10, $lte: 20 } })
+        .find({ price: { $gte: 10, $lte: 20 } })
+        .limit(10)
+        .sort({ name: -1 })
+        .select({ name: 1, tags: 1 });
+    console.log(courses);
+}
+getCourses();
+~~~
