@@ -22,11 +22,25 @@ async function getCourses() {
         .find({ isPublished: true, tags: 'backend' })
         .sort({ name: 1 })
         .select({ name: 1, author: 1 });
-
-
 }
+
+async function getCourses2() {
+    return await Course
+        .find({ isPublished: true })
+        .or([{ tags: "frontend" }, { tags: "backend" }])
+        .sort({ price: -1 })
+        .select({ name: 1, author: 1 });
+}
+
+async function getCourses3() {
+    return await Course
+        .find({ isPublished: true })
+        .or([{ price: { $gte: 15 } }, { name: /.*by.*/i }])
+        .select({ name: 1, author: 1, price: 1 });
+}
+
 async function run() {
-    const courses = await getCourses();
+    const courses = await getCourses3();
     console.log(courses);
 }
 

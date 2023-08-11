@@ -772,3 +772,18 @@ async function getCourses() {
 }
 getCourses();
 ~~~
+
+- Updating a data using Query first Approach
+~~~js
+async function updateCourse(id) {
+    const course = await Course.findById(id);
+
+    if (!course) return;
+
+    course.isPublished = true;
+    course.author = "Another Author";
+    const result = await course.save();
+    console.log(result);
+}
+updateCourse("64cfa44cc9751e8a8080a162");
+~~~
