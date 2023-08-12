@@ -787,3 +787,40 @@ async function updateCourse(id) {
 }
 updateCourse("64cfa44cc9751e8a8080a162");
 ~~~
+
+- Update First Approach: Do not return the body
+~~~js
+async function updateCourseUpdateFirst(id) {
+    const result = await Course.update({ _id: id }, {
+        $set: {
+            author: "Mosh",
+            isPublished: false
+        }
+    })
+    console.log(result);
+}
+updateCourseUpdateFirst("64cfa44cc9751e8a8080a162");
+~~~
+
+- Update First and return the Body
+~~~js
+async function updateCourseUpdateFirst(id) {
+    const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: "Heshan",
+            isPublished: false
+        }
+    }, { new: true })
+    console.log(course);
+}
+updateCourseUpdateFirst("64cfa44cc9751e8a8080a162");
+~~~
+
+- Delete an Object
+~~~js
+async function removeCourse(id) {
+    const result = await Course.deleteOne({ _id: id });
+    console.log(result);
+}
+removeCourse("64cfa44cc9751e8a8080a162");
+~~~

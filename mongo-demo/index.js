@@ -53,4 +53,21 @@ async function updateCourse(id) {
     const result = await course.save();
     console.log(result);
 }
-updateCourse("64cfa44cc9751e8a8080a162");
+// updateCourse("64cfa44cc9751e8a8080a162");
+
+async function updateCourseUpdateFirst(id) {
+    const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: "Heshan",
+            isPublished: false
+        }
+    }, { new: true })
+    console.log(course);
+}
+// updateCourseUpdateFirst("64cfa44cc9751e8a8080a162");
+
+async function removeCourse(id) {
+    const result = await Course.deleteOne({ _id: id });
+    console.log(result);
+}
+removeCourse("64cfa44cc9751e8a8080a162");
